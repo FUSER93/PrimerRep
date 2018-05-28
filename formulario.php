@@ -40,7 +40,7 @@ require_once('variables-formulario.php');
       <h1 class="titulo">Datos personales</h1>
       <hr>
       <br>
-      <input class="<?php if ((isset($errores['nombre']))) {echo 'errorInput';} else {echo 'nombre';}?>" type="text" name="nombre"  placeholder="Nombre y Apellido" value="<?php echo $nombre;?>"><label class="requerido">*</label>
+      <input class="<?php if (isset($errores['nombre'])) {echo 'errorInput';} else {echo 'nombre';}?>" type="text" name="nombre"  placeholder="Nombre y Apellido" value="<?php echo $nombre;?>"><label class="requerido">*</label>
       <?php if($_POST) if(isset($errores['nombre'])) {echo $errores['nombre'];} ?>
       <br>
       <br>
@@ -68,22 +68,22 @@ require_once('variables-formulario.php');
         <br>
         <br>
 
-          <input class="<?php if ((isset($errores['email']))) {echo 'errorInput';} else {echo 'email';}?>" type="text" name="email" placeholder="Usuario@email.com" value = "<?php echo $email;?>"><label class="requerido">*</label>
+          <input class="<?php if (isset($errores['email'])) {echo 'errorInput';} else {echo 'email';}?>" type="text" name="email" placeholder="Usuario@email.com" value = "<?php echo $email;?>"><label class="requerido">*</label>
             <?php if($_POST) if((isset($errores['email']))) {echo $errores['email'];} ?>
             <br>
             <br>
 
-          <input class="<?php if ($errores['profesion'] != '') {echo 'errorInput';} else {echo 'profesion';}?>" type="text" name="profesion" placeholder="Profesión" value = "<?php echo $profesion;?>"><label class="requerido">*</label>
+          <input class="<?php if (isset($errores['profesion'])) {echo 'errorInput';} else {echo 'profesion';}?>" type="text" name="profesion" placeholder="Profesión" value = "<?php echo $profesion;?>"><label class="requerido">*</label>
             <?php if($_POST) if(isset($errores['profesion'])) {echo $errores['profesion'];} ?>
             <br>
             <br>
 
-          <input class="<?php if ($errores['pass'] != '' || $errores['pass2'] != '') {echo 'errorInput';} else {echo 'contraseña';}?>" type="password"  name="pass" placeholder="Password"><label class="requerido">*</label>
+          <input class="<?php if (isset($errores['pass']) || isset($errores['pass2'])) {echo 'errorInput';} else {echo 'contraseña';}?>" type="password"  name="pass" placeholder="Password"><label class="requerido">*</label>
             <?php if($_POST) if(isset($errores['pass'])) {echo $errores['pass'];} ?>
             <br>
             <br>
 
-          <input class="<?php if ($errores['pass'] != '' || $errores['pass2'] != '') {echo 'errorInput';} else {echo 'contraseña';}?>" type="password"  name="pass2" placeholder="Repetir password" ><label class="requerido">*</label>
+          <input class="<?php if (isset($errores['pass']) || isset($errores['pass2'])) {echo 'errorInput';} else {echo 'contraseña';}?>" type="password"  name="pass2" placeholder="Repetir password" ><label class="requerido">*</label>
             <?php if($_POST){ if(isset($errores['pass2'])) {echo $errores['pass2'];}} ?>
             <br>
             <br>
