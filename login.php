@@ -73,7 +73,7 @@ if (estaLogeado()) {
 
              <br><br>
 
-             <a href="formulario2.php">¿No tienes una cuenta? <b>Regístrate</b></a>
+             <a href="formulario.php">¿No tienes una cuenta? <b>Regístrate</b></a>
            </div>
 
 
