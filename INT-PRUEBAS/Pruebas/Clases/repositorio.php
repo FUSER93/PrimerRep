@@ -1,5 +1,5 @@
 <?php
-
+require_once('autoload.php');
 
   class Repositorio{
 
@@ -18,7 +18,7 @@
       	$db=new PDO ($this->dsn,$this->user,$this->pass);
       	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       }
-      catch (Exception $e){
+      catch (PDOException $e){
       	echo "Hubo un error";
       	exit;
       }
@@ -26,10 +26,10 @@
 
     public function traerTodos(){
 
-      $sql = 'SELECT * from usuarios';
-      $stmt = $this->db->prepare($sql);
+      $sql="select * from usuarios";
+      $stmt=$this->db->prepare($sql);
       $stmt->execute();
-      $todosLosUsuariosArray = $stmt->fetchAll();
+      $todosLosUsuariosArray=$stmt->fetchAll();
 
       return $todosLosUsuariosArray;
     }

@@ -24,7 +24,7 @@ require_once('autoload.php');
        }
        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
            $errores['email'] = 'Complete su email con un formato válido';
-       }elseif (!$repo->existeMail($email)) {
+       }elseif ($repo->existeMail($email) == false) {
          $errores['email'] = 'Credenciales invalidas';
        }
        return $errores;
@@ -52,12 +52,16 @@ require_once('autoload.php');
          $errores['pass'] = "¡Ingresa una contraseña valida!";}
        if(self::passwordInvalido() == true){
          $errores['pass2'] = "¡Las contraseñas no coinciden!";}
+
        if (!$datos['fecha']){
          $errores['fecha'] = "¡Decinos cuándo es tu cumpleaños!";}
+
        if ($datos['pais'] == 'Seleccione un pais'){
          $errores['pais'] = "¡Decinos de qué pais sos!";}
+
        if ($datos['provincia'] == 'Seleccione una provincia'){
          $errores['provincia'] = "¡Decinos de qué provincia sos!";}
+
        if ($datos['ciudad'] == 'Seleccione una Ciudad'){
          $errores['ciudad'] = "¡Decinos de qué Ciudad sos!";}
 

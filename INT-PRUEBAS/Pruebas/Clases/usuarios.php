@@ -28,16 +28,36 @@ require_once('autoload.php');
       $this ->pais = $paisUser;
       $this ->provincia = $provinciaUser;
       $this ->ciudad = $ciudadUser;
-      $this ->direccion = $direccionUser;
-      $this ->altura = $alturaUser;
     }
 
     public function getNombre(){
       return $this ->nombre;
     }
+    public function getApellido(){
+      return $this ->apellido;
+    }
+    public function getFecha(){
+      return $this ->fecha;
+    }
     public function getEmail(){
       return $this ->email;
     }
+    public function getPass(){
+      return $this ->pass;
+    }
+    public function getGenero(){
+      return $this ->genero;
+    }
+    public function getPais(){
+      return $this ->pais;
+    }
+    public function getProvincia(){
+      return $this ->provincia;
+    }
+    public function getCiudad(){
+      return $this ->ciudad;
+    }
+
     public function setNombre($nombre){
       $this ->nombre=$nombre;
     }
@@ -47,6 +67,7 @@ require_once('autoload.php');
     public function setPass($pass){
       $this ->pass=$pass;
     }
+
 }
 
  ?>
