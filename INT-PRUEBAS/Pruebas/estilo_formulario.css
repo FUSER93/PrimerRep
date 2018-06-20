@@ -92,15 +92,7 @@ input {
 .caja2 select {
   width: 60%;
 }
-.direccion {
-  width: 60%;
-  padding: 4px;
-}
 
-.nro {
-  width: 10%;
-  padding: 4px;
-}
 
 .botones{padding: 10px; text-align: center;}
 

@@ -12,8 +12,6 @@ $genero='';
 $pais= '';
 $provincia= '';
 $ciudad= '';
-$direccion= '';
-$altura = '';
 $errores=[];
 
 //GRABAR DATOS POST
@@ -29,8 +27,6 @@ if (isset($_POST ['genero'])) {$genero= $_POST['genero'];}
 $pais= $_POST['pais'];
 $provincia= $_POST['provincia'];
 $ciudad= $_POST['ciudad'];
-$direccion= trim($_POST['direccion']);
-$altura= trim($_POST['altura']);
 }
 
 
@@ -160,12 +156,6 @@ $altura= trim($_POST['altura']);
 
         <br>
         <br>
-
-          <input class='direccion' type="text" name="direccion"  placeholder="Calle" value="<?php echo $direccion;?>">
-          <input class='nro' type="text" name="altura"  placeholder="Altura" value="<?php echo $altura;?>">
-
-          <br>
-          <br>
 
           <p>Avatar (opcional)</p>
           <input type="file" name="avatar">
