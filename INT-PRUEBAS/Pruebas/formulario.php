@@ -28,7 +28,7 @@ if (isset($_POST ['genero'])) {$genero= $_POST['genero'];}
 $pais= $_POST['pais'];
 $provincia= $_POST['provincia'];
 $ciudad= $_POST['ciudad'];
-$terminos=$_POST['terminos'];
+$terminos=$_POST['terminos']??null;
 }
 
 
@@ -59,10 +59,11 @@ $terminos=$_POST['terminos'];
       <!-- AVISOS 1 -->
       <?php
       if($_POST){
+
         $errores = Validador::validarDatos($_POST, $conn);
 
         if(empty($errores)) {
-          grabarUsuario($_POST, $conn);
+          $conn->grabarUsuario($_POST);
           header('location:registro-ok.php');
           exit;
         }
