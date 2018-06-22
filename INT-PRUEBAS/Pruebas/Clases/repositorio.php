@@ -19,7 +19,7 @@ require_once('autoload.php');
       	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       }
       catch (PDOException $e){
-      	echo "Hubo un error";
+      	echo 'error'.$e->getMessage();
       	exit;
       }
     }
@@ -38,13 +38,11 @@ require_once('autoload.php');
 
         $sql="select email from usuarios where email = '".$email ."'";
         $stmt=$this->db->prepare($sql);
-        $stmt->execute();
-        $emailsArray= $stmt->fetchAll();
 
-        foreach ($emailsArray as $email) {
-          $existe = $email['email'];
-        }
-        if($existe){
+        $stmt->execute();
+        $emailsArray= $stmt->fetch();
+
+        if($emailsArray){
           return true;
         }
       }
@@ -56,16 +54,16 @@ require_once('autoload.php');
       $apellido = trim($datos['apellido']);
       $profesion = trim($datos['profesion']);
       $email = trim($datos['email']);
-      $fecha = $datos['dia'] ."-" .$datos['mes'] ."-" .$datos['anio'];
-      $pass2 = $datos['pass2'];
+      $fecha = $datos['fecha'];
+      $pass2 = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
       $pais = $datos['pais'];
       $provincia = $datos['provincia'];
       $ciudad = $datos['ciudad'];
       $genero= $datos['genero'];
 
-      $sql="insert into usuarios values(default, " .$email .', ' .$pass2
-      .', now(), ' .$nombre .', '  .$apellido .', ' .$fecha .', ' .$profesion
-      .', ' .$genero .', ' .$pais .', ' .$provincia .', ' .$ciudad .')';
+      $sql="insert into usuarios values(default, '" .$email ."', '" .$pass2
+      ."', now(), '" .$nombre ."', '"  .$apellido ."', '" .$fecha ."', '" .$profesion
+      ."', '" .$genero ."', '" .$pais ."', '" .$provincia ."', '" .$ciudad ."')";
 
       $grabar = $repo->prepare($sql);
       $grabar->execute();

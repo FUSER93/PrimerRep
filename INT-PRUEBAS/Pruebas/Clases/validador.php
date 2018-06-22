@@ -24,13 +24,15 @@ require_once('autoload.php');
        }
        elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
            $errores['email'] = 'Complete su email con un formato válido';
-       }elseif ($repo->existeMail($email) == false) {
+       }elseif ($repo->existeMail($email, $repo) == false) {
          $errores['email'] = 'Credenciales invalidas';
        }
        return $errores;
      }
 
    public function validarDatos($datos, $repo){
+     if (!$_POST['terminos']) {
+       $errores['terminos'] = "¡Debes aceptar los Términos y Condiciones!";}
 
        if (trim($datos['nombre']) == ''){
          $errores['nombre'] = "¡Decinos cúal es tu nombre!";}
@@ -45,7 +47,7 @@ require_once('autoload.php');
          $errores['email'] = "¡Decinos cuál es tu email!";}
          elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
              $errores['email'] = 'Tu mail no tiene un formato válido';}
-       if ($repo->existeEmail($datos['email'])) {
+       elseif ($repo->existeEmail($datos['email'])) {
          $errores['email'] = '¡El mail ya existe!';}
 
        if(self::passwordVacio() == true){

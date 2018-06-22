@@ -12,8 +12,6 @@ require_once('autoload.php');
     private $provincia;
     private $ciudad;
 
-//sacar direcciones y agregar apellido
-
     public function __construct ($nombreUser, $apellidoUser, $fechaNac,
     $profesionUser, $emailUser, $passUser, $generoUser, $paisUser,
     $provinciaUser, $ciudadUser) {
@@ -61,11 +59,29 @@ require_once('autoload.php');
     public function setNombre($nombre){
       $this ->nombre=$nombre;
     }
+    public function setApellido($apellido){
+      $this ->apellido=$apellido;
+    }
     public function setEmail($email){
       $this->email=$email;
     }
     public function setPass($pass){
       $this ->pass=$pass;
+    }
+    public function setFecha($fecha){
+      $this ->fecha=$fecha;
+    }
+    public function setGenero($genero){
+      $this ->genero=$genero;
+    }
+    public function setCiudad($ciudad){
+      $this->ciudad=$ciudad;
+    }
+    public function setProvincia($provincia){
+      $this ->provincia=$provincia;
+    }
+    public function setPais($pais){
+      $this ->pais=$pais;
     }
 
 }
