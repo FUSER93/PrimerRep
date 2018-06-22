@@ -12,11 +12,11 @@ require_once('autoload.php');
       //conexion al db
       $this->dsn="mysql:host=localhost;dbname=ecommerce;charset=utf8mb4;port:3306";
       $this->user="root";
-      $this->pass="";
+      $this->pass="root";
 
       try {
-      	$db=new PDO ($this->dsn,$this->user,$this->pass);
-      	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+      	$this->db=new PDO ($this->dsn,$this->user,$this->pass);
+      	$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
       }
       catch (PDOException $e){
       	echo 'error'.$e->getMessage();
@@ -36,19 +36,14 @@ require_once('autoload.php');
 
     public function existeEmail($email){
 
-        $sql="select email from usuarios where email = '".$email ."'";
+        $sql="select * from usuarios where email = '".$email ."'";
         $stmt=$this->db->prepare($sql);
 
         $stmt->execute();
-        $emailsArray= $stmt->fetch();
-
-        if($emailsArray){
-          return true;
-        }
+        return $stmt->fetch();
       }
 
-    public function grabarUsuario($datos, $repo){
-      if (Validador::validarDatos ($datos, $repo) == false){
+    public function grabarUsuario($datos){
 
       $nombre = trim($datos['nombre']);
       $apellido = trim($datos['apellido']);
@@ -65,9 +60,9 @@ require_once('autoload.php');
       ."', now(), '" .$nombre ."', '"  .$apellido ."', '" .$fecha ."', '" .$profesion
       ."', '" .$genero ."', '" .$pais ."', '" .$provincia ."', '" .$ciudad ."')";
 
-      $grabar = $repo->prepare($sql);
+      $grabar = $this->db->prepare($sql);
       $grabar->execute();
-      }
+
         if($_FILES['avatar']['error'] === UPLOAD_ERR_OK){
           $nombreImg=$_FILES['avatar']['name'];
           $extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
@@ -76,8 +71,8 @@ require_once('autoload.php');
           $ubicacion=dirname(__FILE__);
           $ubicacion=$ubicacion . '/avatar/';
           move_uploaded_file($imagen, $ubicacion .$datos['nombre'] .".".$extension);
-        }}
-
+        }
+      }
     }
 
 }

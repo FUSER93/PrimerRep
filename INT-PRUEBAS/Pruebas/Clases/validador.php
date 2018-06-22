@@ -14,24 +14,35 @@ require_once('autoload.php');
        return true;
      }
    }
+   public function estaLogeado(){
+     return isset($_SESSION['id']);
+  }
 
    public function validarLoginUsuario($datos, $repo){
+
      $email = trim($datos['email']);
      $pass = trim($datos['pass']);
      $errores = [];
-     if ($email == '' || $pass == '') {
-           $errores['email'] = 'Por favor, complete los campos';
-       }
-       elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-           $errores['email'] = 'Complete su email con un formato válido';
-       }elseif ($repo->existeMail($email, $repo) == false) {
-         $errores['email'] = 'Credenciales invalidas';
+
+       if ($email == '' || $pass == '') {
+             $errores['email'] = 'Por favor, complete los campos';
+      }else{
+         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+             $errores['email'] = 'Complete su email con un formato válido';
+         }else{
+           $usuario = $repo->existeEmail($email);
+           if (!$usuario ) {
+             $errores['email'] = 'Credenciales invalidas';
+           }elseif(!password_verify($pass, $usuario['password'])){
+             $errores['pass'] = "Credenciales invalidas";
+           }
+         }
        }
        return $errores;
      }
 
    public function validarDatos($datos, $repo){
-     if (!$_POST['terminos']) {
+     if (!isset($datos['terminos'])) {
        $errores['terminos'] = "¡Debes aceptar los Términos y Condiciones!";}
 
        if (trim($datos['nombre']) == ''){
