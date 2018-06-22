@@ -12,6 +12,7 @@ $genero='';
 $pais= '';
 $provincia= '';
 $ciudad= '';
+$terminos='';
 $errores=[];
 
 //GRABAR DATOS POST
@@ -27,6 +28,7 @@ if (isset($_POST ['genero'])) {$genero= $_POST['genero'];}
 $pais= $_POST['pais'];
 $provincia= $_POST['provincia'];
 $ciudad= $_POST['ciudad'];
+$terminos=$_POST['terminos'];
 }
 
 
@@ -65,8 +67,7 @@ $ciudad= $_POST['ciudad'];
           exit;
         }
       }
-      if ($_POST){
-    var_dump($conn->existeEmail($_POST['email']));}
+
        ?>
 
       <h1 class="titulo">Datos personales</h1>
@@ -162,8 +163,12 @@ $ciudad= $_POST['ciudad'];
           <input type="hidden" name="max_file_size" value="30000">
           <?php if (isset($errores['avatar'])) { echo "<br><br> <p class='errorAvatar'>" .$errores ['avatar'] ."<p>";} ?>
           <br><br>
-      <input id="check" type="checkbox"  name="terminos"><a href="#"><label class="tyc">Acepto Terminos y Condiciones</label></a>
-<label class="requerido">* Campo requerido</label>
+
+            <input class="check" type="checkbox" name="terminos"><a href="#"><label class="tyc">Acepto Terminos y Condiciones</label></a>
+      <label class="requerido">* Campo requerido</label>
+          <?php if (isset($errores['terminos'])) { echo $errores ['terminos'];} ?>
+
+
       </fieldset>
 
 

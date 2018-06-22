@@ -11,8 +11,10 @@ catch (Exception $e){
 	echo "Hubo un error";
 	exit;
 }
+
 echo "Exito";
 $nombre = '';
+$apellido = '';
 $fecha = '';
 $profesion= '';
 $email= '';
@@ -23,26 +25,100 @@ $genero='';
 $pais= '';
 $provincia= '';
 $ciudad= '';
-$direccion= '';
-$altura = '';
+$terminos = '';
 
+//GRABAR DATOS POST
 if ($_POST){
 $nombre = trim($_POST['nombre']);
-$profesion = trim($_POST['profesion']);
-$email = trim($_POST['email']);
-$fecha = $_POST['dia'] ."-" .$_POST['mes'] ."-" .$_POST['anio'];
-$pass2 = $_POST['pass2'];
-$pais = $_POST['pais'];
-$provincia = $_POST['provincia'];
-$ciudad = $_POST['ciudad'];
-$genero= $_POST['genero'];
+$apellido = trim($_POST['apellido']);
+$profesion= trim($_POST['profesion']);
+$fecha= $_POST['fecha'];
+$email= strtolower(trim($_POST['email']));
+$pass= trim($_POST['pass']);
+$pass2= trim($_POST['pass2']);
+if (isset($_POST ['genero'])) {$genero= $_POST['genero'];}
+$pais= $_POST['pais'];
+$provincia= $_POST['provincia'];
+$ciudad= $_POST['ciudad'];
+$terminos=$_POST['terminos'];
+}
+	function existeEmail($email){
 
-$sql="insert into usuarios values(default, " .$nombre .', ' .$pass2 .', ' .$email .', '
-.$profesion .', ' .$genero .', ' .$pais .', ' .$provincia .', ' .$ciudad
-.")";
+		$sql="select email from usuarios where email = '".$email ."'";
+		$stmt = $db->prepare($sql);
+		$stmt->execute();
+		$emailsArray= $stmt->fetch();
 
-$grabar = $db->prepare($sql);
-$grabar->execute();
+		if($emailsArray){
+			return true;
+		}
+	}
+
+function traerTodos($db){
+
+	$sql="select * from usuarios";
+	$stmt= $db->prepare($sql);
+	$stmt->execute();
+	$todosLosUsuariosArray=$stmt->fetchAll();
+
+	return $todosLosUsuariosArray;
+}
+
+
+// if ($_POST){
+// $nombre = trim($_POST['nombre']);
+// $apellido = trim($_POST['apellido']);
+// $profesion = trim($_POST['profesion']);
+// $email = trim($_POST['email']);
+// $fecha = $_POST['fecha'];
+// $pass2 = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
+// $pais = $_POST['pais'];
+// $provincia = $_POST['provincia'];
+// $ciudad = $_POST['ciudad'];
+// $genero= $_POST['genero'];
+//
+// $sql="insert into usuarios values(default, '" .$email ."', '" .$pass2
+// ."', now(), '" .$nombre ."', '"  .$apellido ."', '" .$fecha ."', '" .$profesion
+// ."', '" .$genero ."', '" .$pais ."', '" .$provincia ."', '" .$ciudad ."')";
+//
+// $grabar = $db->prepare($sql);
+// $grabar->execute();
+// }
+
+function validarDatos($datos){
+		if (!$_POST['terminos']) {
+			$errores['terminos'] = "¡Debes aceptar los Términos y Condiciones!";}
+
+		if (!$datos['fecha']){
+			$errores['fecha'] = "¡Decinos cuándo es tu cumpleaños!";}
+
+		if ($datos['pais'] == 'Seleccione un pais'){
+			$errores['pais'] = "¡Decinos de qué pais sos!";}
+
+		if ($datos['provincia'] == 'Seleccione una provincia'){
+			$errores['provincia'] = "¡Decinos de qué provincia sos!";}
+
+		if ($datos['ciudad'] == 'Seleccione una Ciudad'){
+			$errores['ciudad'] = "¡Decinos de qué Ciudad sos!";}
+
+		if($_FILES['avatar'] ['name'] !== '') {
+			$nombreImg = $_FILES['avatar']['name'];
+			$extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
+				if($_FILES['avatar']['error'] !== UPLOAD_ERR_OK){
+					$errores['avatar'] = "La imagen no se pudo cargar";
+				} elseif (!($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png')){
+					$errores['avatar'] = "La imagen no tiene un formato correcto";
+				}
+		}
+		return $errores;
+	}
+if($_POST){
+	$errores=validarDatos($_POST);
+	if($errores){
+		echo "ERROR";
+	} else {
+		echo "Todo OK";
+	}
 }
 
 ?>
@@ -57,13 +133,16 @@ $grabar->execute();
 
     <fieldset class="fondo">
 
-      <h1 class="titulo">_POST personales</h1>
+      <h1 class="titulo">Datos personales</h1>
       <hr>
       <br>
       <input class="<?php if ((isset($errores['nombre']))) {echo 'errorInput';} else {echo 'campo';}?>" type="text" name="nombre"  placeholder="Nombre y Apellido" value="<?php echo $nombre;?>"><label class="requerido">*</label>
       <?php if($_POST) if(isset($errores['nombre'])) {echo $errores['nombre'];} ?>
       <br>
       <br>
+			<input class="<?php if ((isset($errores['apellido']))) {echo 'errorInput';} else {echo 'campo';}?>" type="text" name="apellido"  placeholder="Apellido(s)" value="<?php echo $apellido;?>"><label class="requerido">*</label>
+      <?php if($_POST) if(isset($errores['apellido'])) {echo $errores['apellido'];} ?>
+			<br><br>
 
       <label>Fecha de Nacimiento</label>
 
@@ -144,12 +223,6 @@ $grabar->execute();
         <br>
         <br>
 
-          <input class='direccion' type="text" name="direccion"  placeholder="Calle" value="<?php echo $direccion;?>">
-          <input class='nro' type="text" name="altura"  placeholder="Altura" value="<?php echo $altura;?>">
-
-          <br>
-          <br>
-
           <p>Avatar (opcional)</p>
           <input type="file" name="avatar">
           <input type="hidden" name="max_file_size" value="30000">
@@ -157,6 +230,8 @@ $grabar->execute();
           <br><br>
       <input id="check" type="checkbox"  name="terminos"><a href="#"><label class="tyc">Acepto Terminos y Condiciones</label></a>
 <label class="requerido">* Campo requerido</label>
+	<?php if (isset($errores['terminos'])) { echo $errores ['terminos'];} ?>
+
       </fieldset>
 
 
