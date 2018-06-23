@@ -1,12 +1,12 @@
 <?php
-require_once('funciones.php');
+require_once('Clases/autoload.php');
  ?>
  <header>
    <h2><a href="#">Website Logo</a></h2>
    <nav>
      <?php
 
-     $log=estaLogeado();
+     $log=Autenticador::estaLogeado();
      if (empty($log)) {?>
      <li><a href="formulario.php">¡Registrate!</a></li>
      <li> | </li>

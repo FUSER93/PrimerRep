@@ -38,19 +38,20 @@ require_once('Clases/autoload.php');
               $email = trim($_POST['email']);
               $pass=$_POST['pass'];
               $errores = Validador::validarLoginUsuario($_POST, $conn);
-              var_dump($errores);
+
               if (!$errores) {
-                $usuario = $conn->existeEmail($email);
-                $_SESSION['email'] = $usuario['email'];
+                $usuarios = $conn->existeEmail($email);
+                foreach ($usuarios as $usuario){
+                $_SESSION['email'] = $usuario['email'];}
 
                 if ($_POST['recordarme']) {
                   setCookie('id', $email, time() + 3600);
                 }
 
                 Autenticador::loguearUsuario($usuario);
-                header('location:index.php');
+                header('location:login.php');
               }
-            }?>
+            } ?>
 
 
            <input class="<?php if ((isset($errores['email']))) {echo 'errorInput';} else {echo 'email';}?>" type="text" name="email" value="<?= $email ?>" placeholder="Correo electrónico">
