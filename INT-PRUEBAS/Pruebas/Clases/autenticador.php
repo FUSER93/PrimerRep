@@ -7,7 +7,6 @@
       return isset($_SESSION['id']);
     }
 
-
       public function loguearUsuario($usuario){
         $_SESSION['id'] = $usuario['email'];
       }
