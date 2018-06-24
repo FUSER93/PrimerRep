@@ -46,15 +46,25 @@ require_once('autoload.php');
        $errores['terminos'] = "¡Debes aceptar los Términos y Condiciones!";}
 
        if (trim($datos['nombre']) == ''){
-         $errores['nombre'] = "¡Decinos cúal es tu nombre!";}
+         $errores['nombre'] = "¡Decinos cúal es tu nombre!";
+       }elseif (!preg_match("/^(?!-+)[a-zA-Z-ñáéíóú\s]*$/", $datos['nombre'])) {
+         $errores['nombre'] = "¡El nombre tiene un formato incorrecto!";
+       }
 
       if (trim($datos['apellido']) == ''){
-        $errores['apellido'] = "¡Decinos cúal es tu apellido!";}
+        $errores['apellido'] = "¡Decinos cúal es tu apellido!";
+      }elseif (!preg_match("/^(?!-+)[a-zA-Z-ñáéíóú\s]*$/", $datos['apellido'])){
+        $errores['apellido'] = "¡El apellido tiene un formato incorrecto!";
+      }
+
 
        if (trim($datos['profesion']) == ''){
-         $errores['profesion'] = "¡Decinos de qué trabajas!";}
+         $errores['profesion'] = "¡Decinos de qué trabajas!";
+       }elseif (!preg_match("/^(?!-+)[a-zA-Z-ñáéíóú\s]*$/", $datos['apellido'])){
+         $errores['apellido'] = "¡La profesion tiene un formato incorrecto!";
+       }
 
-       if (trim($datos['email']) == ''){
+       if (strtolower(trim($_POST['email'])) == ''){
          $errores['email'] = "¡Decinos cuál es tu email!";}
          elseif (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
              $errores['email'] = 'Tu mail no tiene un formato válido';}
@@ -79,17 +89,22 @@ require_once('autoload.php');
          $errores['ciudad'] = "¡Decinos de qué Ciudad sos!";}
 
 
-       if($_FILES['avatar'] ['name'] !== '') {
-         $nombreImg = $_FILES['avatar']['name'];
-         $extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
-           if($_FILES['avatar']['error'] !== UPLOAD_ERR_OK){
-             $errores['avatar'] = "La imagen no se pudo cargar";
-           } elseif (!($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png')){
-             $errores['avatar'] = "La imagen no tiene un formato correcto";
-           }
-       }
-       return $errores;
+         if($_FILES['avatar']['error'] === UPLOAD_ERR_OK){
+           $nombreImg=$_FILES['avatar']['name'];
+           $extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
+           $archivoFisico = $_FILES['avatar']['tmp_name'];
+         if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png'){
+           $imagen=$_FILES['avatar']['tmp_name'];
+           $ubicacion=dirname(__FILE__);
+           $ubicacion= $ubicacion .'/avatar/' .$_POST['email'] .'.' .$extension;
+           move_uploaded_file($imagen, $ubicacion);
+         } else {
+           $errores['avatar'] = 'El formato tiene que ser JPG, JPEG, PNG o GIF';
+          }
+         }
+         return $errores;
+        }
+
      }
 
-   }
  ?>

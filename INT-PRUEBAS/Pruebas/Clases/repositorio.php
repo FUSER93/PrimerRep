@@ -12,7 +12,7 @@ require_once('autoload.php');
       //conexion al db
       $this->dsn="mysql:host=localhost;dbname=ecommerce;charset=utf8mb4;port:3306";
       $this->user="root";
-      $this->pass="root";
+      $this->pass="";
 
       try {
       	$this->db=new PDO ($this->dsn,$this->user,$this->pass);
@@ -48,7 +48,7 @@ require_once('autoload.php');
       $nombre = trim($datos['nombre']);
       $apellido = trim($datos['apellido']);
       $profesion = trim($datos['profesion']);
-      $email = trim($datos['email']);
+      $email = strtolower(trim($_POST['email']));
       $fecha = $datos['fecha'];
       $pass2 = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
       $pais = $datos['pais'];
