@@ -59,9 +59,7 @@ $terminos=$_POST['terminos']??null;
       <!-- AVISOS 1 -->
       <?php
       if($_POST){
-
         $errores = Validador::validarDatos($_POST, $conn);
-
         if(empty($errores)) {
           $conn->grabarUsuario($_POST);
           header('location:registro-ok.php');

@@ -35,7 +35,7 @@ require_once('Clases/autoload.php');
           $pass='';
           $errores = [];
           if ($_POST) {
-              $email = trim($_POST['email']);
+              $email = strtolower(trim($_POST['email']));
               $pass=$_POST['pass'];
               $errores = Validador::validarLoginUsuario($_POST, $conn);
 
