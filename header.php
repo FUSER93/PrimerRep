@@ -1,5 +1,5 @@
 <?php
-require_once('funciones.php');
+require_once('Clases/autoload.php');
  ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ require_once('funciones.php');
 
     <nav class="menu">
     <?php
-      $log=estaLogeado();
+      $log=Autenticador::estaLogeado();
       if (empty($log)) {?>
       <li><a href="index.php">Home</a></li>
       <li> | </li>
@@ -21,7 +21,7 @@ require_once('funciones.php');
       <li> | </li>
       <li><a href="formulario.php">Registrate</a></li>
     <?php }else{?>
-      <li><a href="#">¡Bienvenido, <?php echo " " .nombreUsuario($_SESSION['email']) ."!";  ?></a></li>
+      <li><a href="#">¡Bienvenido, <?php echo " " .Autenticador::nombreUsuario($_SESSION['id'],$conn) ."!";  ?></a></li>
       <li> | </li>
       <li><a href="index.php">Home</a></li>
       <li> | </li>
