@@ -22,11 +22,11 @@ class CrearBD {
 
   public function nuevaBD(){
 
-   $crear_db = $this->db->prepare('CREATE DATABASE IF NOT EXISTS ecommerce6 COLLATE utf8_spanish_ci');
+   $crear_db = $this->db->prepare('CREATE DATABASE IF NOT EXISTS ecommerce COLLATE utf8_spanish_ci');
    $crear_db->execute();
 
    if($crear_db){
-     $use_db = $this->db->prepare('USE ecommerce6');
+     $use_db = $this->db->prepare('USE ecommerce');
      $use_db->execute();
    }
    if($use_db){
