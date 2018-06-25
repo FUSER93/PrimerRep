@@ -48,15 +48,6 @@ class CrearBD {
       $crear_tb_usuarios = $this->db->prepare($sql_usuarios);
       $crear_tb_usuarios->execute();
 
-      $sql_contrataciones ='CREATE TABLE IF NOT EXISTS
-      contrataciones (id int(11) NOT NULL AUTO_INCREMENT,
-      id_usuario_contratante int(11) COLLATE utf8_spanish_ci NOT NULL,
-      id_servicio_contratado int(11) COLLATE utf8_spanish_ci NOT NULL,
-      PRIMARY KEY (id))';
-
-      $crear_tb_contrataciones = $this->db->prepare($sql_contrataciones);
-      $crear_tb_contrataciones->execute();
-
       $sql_servicios ='CREATE TABLE IF NOT EXISTS
       servicios (id int(11) NOT NULL AUTO_INCREMENT,
       rubro varchar(45) COLLATE utf8_spanish_ci NOT NULL,
@@ -65,7 +56,20 @@ class CrearBD {
       monto int(11) COLLATE utf8_spanish_ci NOT NULL,
       fecha_inicio date COLLATE utf8_spanish_ci NOT NULL,
       fecha_fin date NOT NULL,
-      PRIMARY KEY (id))';
+      PRIMARY KEY (id))
+      FOREIGN KEY (id_usuario) REFERENCES usuarios(id)';
+
+      $sql_contrataciones ='CREATE TABLE IF NOT EXISTS
+      contrataciones (id int(11) NOT NULL AUTO_INCREMENT,
+      id_usuario_contratante int(11) COLLATE utf8_spanish_ci NOT NULL,
+      id_servicio_contratado int(11) COLLATE utf8_spanish_ci NOT NULL,
+      PRIMARY KEY (id)),
+      FOREIGN KEY (id_usuario_contratante) REFERENCES usuarios(id)
+      FOREIGN KEY (id_servicio_contratado) REFERENCES servicios(id)';
+
+      $crear_tb_contrataciones = $this->db->prepare($sql_contrataciones);
+      $crear_tb_contrataciones->execute();
+
 
        $crear_tb_servicios = $this->db->prepare($sql_servicios);
        $crear_tb_servicios->execute();
