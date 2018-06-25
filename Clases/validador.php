@@ -41,6 +41,7 @@ require_once('autoload.php');
 
 
    public function validarDatos($datos, $repo){
+     $errores = [];
      if (!isset($datos['terminos'])) {
        $errores['terminos'] = "¡Debes aceptar los Términos y Condiciones!";}
 

@@ -62,7 +62,7 @@ require_once('autoload.php');
             $imagen=$_FILES['avatar']['tmp_name'];
             $ubicacion=dirname(__FILE__);
             $ubicacion=$ubicacion . '/avatar/';
-            move_uploaded_file($imagen, $ubicacion .$datos['nombre'] .".".$extension);
+            move_uploaded_file($imagen, $ubicacion .$datos->getEmail() .".".$extension);
           }
         }
       }
