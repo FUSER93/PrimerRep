@@ -42,18 +42,21 @@ require_once('Clases/autoload.php');
 
                 $usuario = $conn->existeEmail($email);
 
+                Autenticador::loguearUsuario($usuario);
 
                  if (!Autenticador::estaLogeado() && isset($_COOKIE['id'])) {
                    Autenticador::loguearUsuario($_COOKIE['id']);
                 }
 
+                if (Autenticador::estaLogeado()) {
+                  header('location:index.php');
+                }else {
+                  header('location:login.php');
+                }
+
                 if ($_POST['recordarme']) {
                   setCookie('id', $email, time() + 3600);
                 }
-
-                 Autenticador::loguearUsuario($usuario);
-                 header('location:index.php');
-
               }
 
             } ?>
@@ -64,6 +67,8 @@ require_once('Clases/autoload.php');
            <br>
            <div class="separador1"></div>
 
+
+            <?php if($_POST) if(isset($errores['email'])) {echo $errores['email'];} ?>
            <input class="<?php if ((isset($errores['email']))) {echo 'errorInput';} else {echo 'pass';}?>" type="password" name="pass" placeholder="Password">
 
 
