@@ -18,13 +18,3 @@ require_once('Clases/autoload.php');
    <?php };?>
    </nav>
  </header>
-
-
-    <!-- <header>
-      <h2><a href="#">Website Logo</a></h2>
-      <nav>
-        <li><a href="formulario.php">¡Registrate!</a></li>
-        <li> | </li>
-        <li><a href="login.php">Login</a></li>
-      </nav>
-    </header> -->
