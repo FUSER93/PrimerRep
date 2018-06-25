@@ -42,8 +42,6 @@ require_once('Clases/autoload.php');
 
                 $usuario = $conn->existeEmail($email);
 
-                 // foreach ($usuarios as $usuario){
-                 // $_SESSION['email'] = $usuario['email'];}
 
                  if (!Autenticador::estaLogeado() && isset($_COOKIE['id'])) {
                    Autenticador::loguearUsuario($_COOKIE['id']);

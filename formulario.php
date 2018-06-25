@@ -31,6 +31,26 @@ $ciudad= $_POST['ciudad'];
 $terminos=$_POST['terminos']??null;
 }
 
+if($_POST){
+  $errores = Validador::validarDatos($_POST, $conn);
+  if(empty($errores)) {
+    $passHash = password_hash($pass2, PASSWORD_DEFAULT);
+    $usuario = new Usuario($email, $passHash);
+    $usuario->setNombre($nombre);
+    $usuario->setApellido($apellido);
+    $usuario->setFecha($fecha);
+    $usuario->setGenero($genero);
+    $usuario->setCiudad($ciudad);
+    $usuario->setProvincia($provincia);
+    $usuario->setProfesion($profesion);
+    $usuario->setPais($pais);
+
+    $conn->grabarUsuario($usuario);
+
+    header('location:registro-ok.php');
+    exit;
+  }
+}
 
 ?>
 
@@ -55,33 +75,6 @@ $terminos=$_POST['terminos']??null;
     <form class="todo" method="post" enctype="multipart/form-data">
 
     <fieldset class="fondo">
-
-      <!-- AVISOS 1 -->
-      <?php
-      if($_POST){
-        $errores = Validador::validarDatos($_POST, $conn);
-        if(empty($errores)) {
-          $passHash = password_hash($pass2, PASSWORD_DEFAULT);
-          $usuario = new Usuario($email, $passHash);
-          $usuario->setNombre($nombre);
-          $usuario->setApellido($apellido);
-          $usuario->setFecha($fecha);
-          $usuario->setGenero($genero);
-          $usuario->setCiudad($ciudad);
-          $usuario->setProvincia($provincia);
-          $usuario->setProfesion($profesion);
-          $usuario->setPais($pais);
-
-          $conn->grabarUsuario($usuario);
-
-          header('location:registro-ok.php');
-          exit;
-        }
-      }
-
-       ?>
-
-
 
       <h1 class="titulo">Datos personales</h1>
       <hr>
