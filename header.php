@@ -21,7 +21,7 @@ require_once('Clases/autoload.php');
       <li> | </li>
       <li><a href="formulario.php">Registrate</a></li>
     <?php }else{?>
-      <li><a href="#">¡Bienvenido, <?php echo " " .Autenticador::nombreUsuario($_SESSION['id'],$conn) ."!";  ?></a></li>
+      <li><a href="#">¡Bienvenido, <?php echo " " .nombreUsuario($_SESSION['email']) ."!";  ?></a></li>
       <li> | </li>
       <li><a href="index.php">Home</a></li>
       <li> | </li>
