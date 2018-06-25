@@ -29,10 +29,8 @@ require_once('autoload.php');
              $errores['email'] = 'Complete su email con un formato válido';
          }else{
            $usuario = $repo->existeEmail($email);
-           if (!$usuario ) {
+           if (!$usuario || (!password_verify($pass, $usuario['password']))) {
              $errores['email'] = 'Credenciales invalidas';
-           }elseif(!password_verify($pass, $usuario['password'])){
-             $errores['pass'] = "Credenciales invalidas";
            }
          }
        }
