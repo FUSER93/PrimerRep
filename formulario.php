@@ -28,7 +28,7 @@ if (isset($_POST ['genero'])) {$genero= $_POST['genero'];}
 $pais= $_POST['pais'];
 $provincia= $_POST['provincia'];
 $ciudad= $_POST['ciudad'];
-$terminos=$_POST['terminos']??null;
+//$terminos=$_POST['terminos']??null;
 }
 
 if($_POST){
