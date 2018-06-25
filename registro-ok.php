@@ -1,4 +1,4 @@
-<?php require_once('funciones.php'); ?>
+<?php require_once('Clases/autoload.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>

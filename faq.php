@@ -1,5 +1,5 @@
 <?php
-require_once('Clases/autoload.php');
+require_once('funciones.php');
  ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
