@@ -43,37 +43,29 @@ require_once('autoload.php');
         return $stmt->fetch();
       }
 
-    public function grabarUsuario($datos){
+      public function grabarUsuario($datos){
 
-      $nombre = trim($datos['nombre']);
-      $apellido = trim($datos['apellido']);
-      $profesion = trim($datos['profesion']);
-      $email = strtolower(trim($_POST['email']));
-      $fecha = $datos['fecha'];
-      $pass2 = password_hash($_POST['pass2'], PASSWORD_DEFAULT);
-      $pais = $datos['pais'];
-      $provincia = $datos['provincia'];
-      $ciudad = $datos['ciudad'];
-      $genero= $datos['genero'];
+        $sql="insert into usuarios values(default, '" .$datos->getEmail() ."', '"
+        .$datos->getPass() ."', now(), '" .$datos->getNombre() ."', '"
+        .$datos->getApellido() ."', '" .$datos->getFecha() ."', '"
+        .$datos->getProfesion() ."', '" .$datos->getGenero() ."', '"
+        .$datos->getPais() ."', '" .$datos->getProvincia() ."', '"
+        .$datos->getCiudad() ."')";
 
-      $sql="insert into usuarios values(default, '" .$email ."', '" .$pass2
-      ."', now(), '" .$nombre ."', '"  .$apellido ."', '" .$fecha ."', '" .$profesion
-      ."', '" .$genero ."', '" .$pais ."', '" .$provincia ."', '" .$ciudad ."')";
+        $grabar = $this->db->prepare($sql);
+        $grabar->execute();
 
-      $grabar = $this->db->prepare($sql);
-      $grabar->execute();
-
-        if($_FILES['avatar']['error'] === UPLOAD_ERR_OK){
-          $nombreImg=$_FILES['avatar']['name'];
-          $extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
-        if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png'){
-          $imagen=$_FILES['avatar']['tmp_name'];
-          $ubicacion=dirname(__FILE__);
-          $ubicacion=$ubicacion . '/avatar/';
-          move_uploaded_file($imagen, $ubicacion .$datos['nombre'] .".".$extension);
+          if($_FILES['avatar']['error'] === UPLOAD_ERR_OK){
+            $nombreImg=$_FILES['avatar']['name'];
+            $extension=pathinfo($nombreImg, PATHINFO_EXTENSION);
+          if ($extension == 'jpg' || $extension == 'jpeg' || $extension == 'png'){
+            $imagen=$_FILES['avatar']['tmp_name'];
+            $ubicacion=dirname(__FILE__);
+            $ubicacion=$ubicacion . '/avatar/';
+            move_uploaded_file($imagen, $ubicacion .$datos['nombre'] .".".$extension);
+          }
         }
       }
-    }
 
 }
 
