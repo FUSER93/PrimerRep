@@ -22,11 +22,11 @@ class CrearBD {
 
   public function nuevaBD(){
 
-   $crear_db = $this->db->prepare('CREATE DATABASE IF NOT EXISTS ecommerce COLLATE utf8_spanish_ci');
+   $crear_db = $this->db->prepare('CREATE DATABASE IF NOT EXISTS ecommerce6 COLLATE utf8_spanish_ci');
    $crear_db->execute();
 
    if($crear_db){
-     $use_db = $this->db->prepare('USE ecommerce');
+     $use_db = $this->db->prepare('USE ecommerce6');
      $use_db->execute();
    }
    if($use_db){
@@ -56,23 +56,23 @@ class CrearBD {
       monto int(11) COLLATE utf8_spanish_ci NOT NULL,
       fecha_inicio date COLLATE utf8_spanish_ci NOT NULL,
       fecha_fin date NOT NULL,
-      PRIMARY KEY (id))
-      FOREIGN KEY (id_usuario) REFERENCES usuarios(id)';
+      PRIMARY KEY (id),
+      FOREIGN KEY (id_usuario) REFERENCES usuarios(id))';
+
+      $crear_tb_servicios = $this->db->prepare($sql_servicios);
+      $crear_tb_servicios->execute();
 
       $sql_contrataciones ='CREATE TABLE IF NOT EXISTS
       contrataciones (id int(11) NOT NULL AUTO_INCREMENT,
       id_usuario_contratante int(11) COLLATE utf8_spanish_ci NOT NULL,
       id_servicio_contratado int(11) COLLATE utf8_spanish_ci NOT NULL,
-      PRIMARY KEY (id)),
-      FOREIGN KEY (id_usuario_contratante) REFERENCES usuarios(id)
-      FOREIGN KEY (id_servicio_contratado) REFERENCES servicios(id)';
+      PRIMARY KEY (id),
+      FOREIGN KEY (id_usuario_contratante) REFERENCES usuarios(id),
+      FOREIGN KEY (id_servicio_contratado) REFERENCES servicios(id))';
 
       $crear_tb_contrataciones = $this->db->prepare($sql_contrataciones);
       $crear_tb_contrataciones->execute();
 
-
-       $crear_tb_servicios = $this->db->prepare($sql_servicios);
-       $crear_tb_servicios->execute();
      }
    }
  }
